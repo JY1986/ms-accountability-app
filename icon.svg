@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="100%" stop-color="#1a56a8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background with rounded corners -->
+  <rect width="512" height="512" rx="90" fill="url(#bg)"/>
+
+  <!-- Finial cross -->
+  <rect x="252" y="74" width="8" height="30" fill="white" rx="2"/>
+  <rect x="243" y="83" width="26" height="8" fill="white" rx="2"/>
+
+  <!-- Dome -->
+  <path d="M 186 188 C 186 118 216 96 256 96 C 296 96 326 118 326 188 Z" fill="white"/>
+
+  <!-- Drum (band between dome and columns) -->
+  <rect x="186" y="184" width="140" height="20" fill="white"/>
+
+  <!-- Column capitals -->
+  <rect x="186" y="200" width="140" height="10" fill="white"/>
+
+  <!-- Three columns -->
+  <rect x="196" y="210" width="18" height="98" fill="white" rx="3"/>
+  <rect x="247" y="210" width="18" height="98" fill="white" rx="3"/>
+  <rect x="298" y="210" width="18" height="98" fill="white" rx="3"/>
+
+  <!-- Column bases -->
+  <rect x="186" y="304" width="140" height="10" fill="white"/>
+
+  <!-- Stylobate steps -->
+  <rect x="178" y="314" width="156" height="13" fill="white" rx="2"/>
+  <rect x="168" y="325" width="176" height="12" fill="white" rx="2"/>
+
+  <!-- "School Leaders" text -->
+  <text x="256" y="383"
+    font-family="system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+    font-weight="900" font-size="50" fill="white" text-anchor="middle">School Leaders</text>
+
+  <!-- "THINK TANK" text -->
+  <text x="256" y="428"
+    font-family="system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+    font-weight="700" font-size="34" fill="rgba(255,255,255,0.75)" text-anchor="middle"
+    letter-spacing="6">THINK TANK</text>
+</svg>

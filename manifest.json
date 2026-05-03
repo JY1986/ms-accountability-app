@@ -1,0 +1,48 @@
+{
+  "name": "Mississippi Accountability System",
+  "short_name": "MS Accountability",
+  "description": "MDE 2025 Accountability System decoded for Mississippi school leaders — models, components, FAY rules, formulas, growth weights, and letter grades.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "lang": "en-US",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "FAY Calculator",
+      "short_name": "FAY Calc",
+      "description": "Check a student's Full Academic Year status",
+      "url": "./index.html#fay"
+    },
+    {
+      "name": "Score Calculator",
+      "short_name": "Score Calc",
+      "description": "Estimate your school accountability score",
+      "url": "./index.html#calculator"
+    },
+    {
+      "name": "Grade Scales",
+      "short_name": "Grades",
+      "description": "A–F letter grade cut scores",
+      "url": "./index.html#grades"
+    }
+  ]
+}

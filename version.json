@@ -1,0 +1,9 @@
+{
+  "appVersion": "2025.1",
+  "mdeDocumentTitle": "Mississippi Public School Accountability Standards 2025",
+  "mdeRevisionDate": "2026-01-13",
+  "schoolYear": "2025-2026",
+  "effectiveYear": "2025",
+  "releaseNotes": "Initial release based on MDE 2025 Accountability Standards, revised January 13, 2026.",
+  "updateInstructions": "To publish an annual update: (1) revise index.html with new MDE content, (2) bump appVersion here (e.g. '2026.1'), (3) update mdeRevisionDate and schoolYear, (4) bump CACHE_NAME in sw.js to match (e.g. 'mde-acct-v2026-1'). Deployed users will see an 'Update Available' banner automatically."
+}

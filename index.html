@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#07111f"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="MS Accountability"/>
+<meta name="description" content="MDE 2025 Accountability System decoded for Mississippi school leaders."/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon.svg"/>
+<title>MDE 2025 Accountability System | PrincipalYeager.com</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#07111f;--surface:rgba(255,255,255,0.04);--surface2:rgba(255,255,255,0.08);
+  --border:rgba(255,255,255,0.09);--border2:rgba(255,255,255,0.18);
+  --text:#f0f4f8;--muted:#8a9ab0;--blue:#2d7dd2;--blue-light:#5b9fe8;
+  --teal:#1abcb0;--gold:#e8a020;--green:#27c96a;--red:#e85454;
+  --orange:#e87830;--purple:#9b72e8;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;}
+
+/* UPDATE BANNER */
+.update-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:#1456a8;color:#fff;text-align:center;padding:10px 16px;font-size:13px;font-weight:700;}
+.update-banner.show{display:flex;align-items:center;justify-content:center;gap:12px;}
+.update-btn{background:#fff;color:#1456a8;border:none;border-radius:8px;padding:5px 14px;font-size:12px;font-weight:800;cursor:pointer;}
+.update-dismiss{background:transparent;border:none;color:rgba(255,255,255,0.7);font-size:18px;cursor:pointer;padding:0 4px;}
+
+/* INSTALL BANNER */
+.install-banner{display:none;position:fixed;bottom:0;left:0;right:0;z-index:998;background:#0e1f36;border-top:1px solid rgba(45,125,210,0.4);padding:14px 20px;align-items:center;gap:12px;}
+.install-banner.show{display:flex;}
+.install-banner-text{flex:1;font-size:13px;color:var(--text);}
+.install-banner-text span{display:block;font-size:11px;color:var(--muted);margin-top:2px;}
+.install-btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.install-dismiss{background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px;}
+
+/* SITE HEADER */
+.site-header{background:rgba(7,17,31,0.97);border-bottom:1px solid rgba(45,125,210,0.3);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:300;backdrop-filter:blur(14px);}
+.site-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-badge{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#1456a8,#2d7dd2);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;letter-spacing:-1px;flex-shrink:0;}
+.logo-text{font-size:14px;font-weight:800;color:var(--text);line-height:1.2;}
+.logo-sub{font-size:10px;color:var(--blue-light);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+.site-nav{display:flex;gap:2px;flex-wrap:wrap;}
+.site-nav a{color:var(--muted);text-decoration:none;font-size:11px;font-weight:600;padding:5px 10px;border-radius:14px;transition:color .2s,background .2s;white-space:nowrap;}
+.site-nav a:hover{color:var(--text);background:var(--surface2);}
+.hamburger-btn{display:none;background:transparent;border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:20px;width:40px;height:40px;align-items:center;justify-content:center;cursor:pointer;}
+
+/* MOBILE NAV */
+.mobile-nav{display:none;position:fixed;inset:0;z-index:400;background:rgba(7,17,31,0.98);padding:20px;flex-direction:column;gap:6px;overflow-y:auto;}
+.mobile-nav.open{display:flex;}
+.mobile-nav-close{align-self:flex-end;background:var(--surface2);border:none;color:var(--text);font-size:20px;width:40px;height:40px;border-radius:50%;cursor:pointer;margin-bottom:16px;}
+.mobile-nav a{color:var(--text);text-decoration:none;font-size:17px;font-weight:600;padding:14px 16px;border-radius:12px;border:1px solid var(--border);}
+.mobile-nav a:active{background:var(--surface2);}
+
+/* HERO */
+.hero{padding:68px 24px 56px;text-align:center;background:linear-gradient(180deg,#091824 0%,var(--bg) 100%);position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -10%,rgba(45,125,210,0.22) 0%,transparent 60%);pointer-events:none;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-light);border:1px solid rgba(45,125,210,0.35);border-radius:20px;padding:5px 16px;margin-bottom:20px;}
+.hero h1{font-size:clamp(26px,5vw,52px);font-weight:900;letter-spacing:-0.025em;line-height:1.08;margin-bottom:14px;}
+.hero h1 span{color:var(--blue-light);}
+.hero-sub{font-size:16px;color:var(--muted);max-width:640px;margin:0 auto 12px;line-height:1.6;}
+.hero-doc-note{font-size:12px;color:rgba(138,154,176,0.7);margin-bottom:32px;font-style:italic;}
+.grade-summary{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.grade-pill{padding:8px 18px;border-radius:24px;font-weight:800;font-size:13px;letter-spacing:0.04em;border:2px solid;cursor:default;}
+.gp-a{background:rgba(39,201,106,0.12);border-color:#27c96a;color:#27c96a;}
+.gp-b{background:rgba(91,159,232,0.12);border-color:#5b9fe8;color:#5b9fe8;}
+.gp-c{background:rgba(232,160,32,0.12);border-color:#e8a020;color:#e8a020;}
+.gp-d{background:rgba(232,120,48,0.12);border-color:#e87830;color:#e87830;}
+.gp-f{background:rgba(232,84,84,0.12);border-color:#e85454;color:#e85454;}
+
+/* SECTIONS */
+.section{padding:72px 24px;max-width:1100px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:44px;}
+.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-light);margin-bottom:10px;}
+.section-header h2{font-size:clamp(22px,4vw,38px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:12px;}
+.section-header p{font-size:16px;color:var(--muted);max-width:580px;margin:0 auto;}
+.section-divider{border:none;border-top:1px solid var(--border);margin:0;}
+
+/* CARDS */
+.card-grid{display:grid;gap:16px;}
+.card-grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+.card-grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;}
+.card-icon{font-size:28px;margin-bottom:12px;}
+.card-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px;line-height:1.3;}
+.card p{font-size:14px;color:var(--muted);line-height:1.5;}
+
+/* MODEL TABS */
+.model-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:32px;flex-wrap:wrap;}
+.model-tab{padding:10px 24px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.model-tab.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.model-panel{display:none;}
+.model-panel.active{display:block;}
+
+/* COMPONENT CARDS */
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;}
+.comp-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.comp-card::after{content:'🔍 Tap for formula';position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(45,125,210,0.85),transparent);color:#fff;font-size:10px;font-weight:700;letter-spacing:.06em;text-align:center;padding:8px 4px 6px;opacity:0;transition:opacity .2s;}
+.comp-card:hover{border-color:var(--blue);box-shadow:0 0 24px rgba(45,125,210,0.2);transform:translateY(-2px);}
+.comp-card:hover::after{opacity:1;}
+.comp-pts{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.comp-name{font-size:15px;font-weight:700;line-height:1.3;margin-bottom:6px;}
+.comp-rule{font-size:11px;color:var(--muted);}
+.comp-badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;margin-top:8px;}
+
+/* GRADE TABLES */
+.grade-table{width:100%;border-collapse:collapse;font-size:14px;}
+.grade-table th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border2);}
+.grade-table td{padding:12px 14px;border-bottom:1px solid var(--border);}
+.grade-table tr:last-child td{border-bottom:none;}
+.grade-table tr:hover td{background:var(--surface2);}
+.g-a{color:#27c96a;font-weight:800;}.g-b{color:#5b9fe8;font-weight:800;}
+.g-c{color:#e8a020;font-weight:800;}.g-d{color:#e87830;font-weight:800;}.g-f{color:#e85454;font-weight:800;}
+
+/* FAY */
+.fay-timeline{display:flex;align-items:flex-start;gap:0;margin:32px 0;overflow-x:auto;padding-bottom:8px;}
+.fay-tm-item{flex:1;min-width:120px;text-align:center;position:relative;}
+.fay-tm-item:not(:last-child)::after{content:'';position:absolute;top:20px;right:0;width:100%;height:2px;background:linear-gradient(90deg,var(--blue),rgba(45,125,210,0.3));z-index:0;}
+.fay-tm-dot{width:40px;height:40px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:16px;margin:0 auto 10px;position:relative;z-index:1;box-shadow:0 0 0 4px rgba(45,125,210,0.2);}
+.fay-tm-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-light);margin-bottom:4px;}
+.fay-tm-date{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.fay-tm-note{font-size:11px;color:var(--muted);}
+.fay-highlight{background:rgba(45,125,210,0.08);border:1px solid rgba(45,125,210,0.25);border-radius:12px;padding:20px 24px;margin:24px 0;}
+.fay-highlight strong{color:var(--blue-light);}
+.fay-rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:24px 0;}
+.fay-rule-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.fay-rule-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-light);margin-bottom:6px;}
+.fay-rule-card h4{font-size:14px;font-weight:700;margin-bottom:6px;}
+.fay-rule-card p{font-size:13px;color:var(--muted);line-height:1.5;}
+
+/* SCENARIO TABS */
+.scenario-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.sc-tab{padding:7px 14px;border-radius:16px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.sc-tab.active{background:var(--teal);border-color:var(--teal);color:#fff;}
+.sc-panel{display:none;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;}
+.sc-panel.active{display:block;}
+.sc-panel h4{font-size:15px;font-weight:700;margin-bottom:12px;color:var(--teal);}
+.sc-panel p{font-size:14px;color:var(--muted);margin-bottom:10px;line-height:1.6;}
+.sc-rule-tag{display:inline-block;background:rgba(26,188,176,0.12);border:1px solid rgba(26,188,176,0.3);color:var(--teal);font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-right:6px;margin-bottom:6px;}
+.sc-verdict{border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600;margin-top:12px;}
+.sc-verdict.yes{background:rgba(39,201,106,0.12);border:1px solid rgba(39,201,106,0.3);color:#27c96a;}
+.sc-verdict.no{background:rgba(232,84,84,0.12);border:1px solid rgba(232,84,84,0.3);color:#e85454;}
+.sc-verdict.partial{background:rgba(232,160,32,0.12);border:1px solid rgba(232,160,32,0.3);color:#e8a020;}
+
+/* FAY CALCULATOR */
+.fay-calc{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:28px;}
+.fay-calc h3{font-size:18px;font-weight:700;margin-bottom:6px;}
+.fay-calc-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.fay-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px;}
+.fay-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.fay-field input,.fay-field select{width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;padding:10px 12px;outline:none;transition:border-color .2s;}
+.fay-field input:focus,.fay-field select:focus{border-color:var(--blue);}
+.fay-calc-btn{display:block;width:100%;padding:13px;background:var(--blue);border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;margin-bottom:16px;}
+.fay-calc-btn:hover{background:#2268b8;}
+.fay-result{background:rgba(45,125,210,0.08);border:1px solid rgba(45,125,210,0.25);border-radius:10px;padding:16px 20px;display:none;}
+.fay-result.show{display:block;}
+.fay-result-line{font-size:13px;color:var(--muted);margin-bottom:4px;}
+.fay-result-verdict{font-size:15px;font-weight:800;margin-top:10px;padding:10px 14px;border-radius:8px;}
+.fay-met{background:rgba(39,201,106,0.15);border:1px solid rgba(39,201,106,0.4);color:#27c96a;}
+.fay-not{background:rgba(232,84,84,0.15);border:1px solid rgba(232,84,84,0.4);color:#e85454;}
+
+/* FORMULA MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px);}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:#0e1f36;border:1px solid rgba(45,125,210,0.35);border-radius:18px;padding:32px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(20px);transition:transform .25s;}
+.modal-overlay.open .modal-box{transform:translateY(0);}
+.modal-close{float:right;background:var(--surface2);border:none;color:var(--muted);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.modal-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-light);margin-bottom:6px;}
+.modal-name{font-size:22px;font-weight:800;margin-bottom:4px;}
+.modal-rule-tag{font-size:11px;color:var(--muted);margin-bottom:24px;}
+.formula-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px;margin-bottom:20px;text-align:center;}
+.frac{display:inline-block;text-align:center;vertical-align:middle;}
+.frac-num{display:block;border-bottom:2px solid var(--blue-light);padding-bottom:4px;margin-bottom:4px;font-size:14px;font-weight:600;color:var(--text);}
+.frac-den{display:block;font-size:14px;font-weight:600;color:var(--muted);}
+.frac-mult{display:inline-block;vertical-align:middle;font-size:18px;font-weight:800;color:var(--blue-light);margin:0 12px;}
+.frac-eq{display:inline-block;vertical-align:middle;font-size:18px;color:var(--muted);margin:0 10px;}
+.frac-result{display:inline-block;vertical-align:middle;font-size:16px;font-weight:800;color:var(--green);}
+.modal-example{background:rgba(39,201,106,0.07);border:1px solid rgba(39,201,106,0.2);border-radius:10px;padding:16px;margin-bottom:16px;}
+.modal-example-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.modal-example p{font-size:13px;color:var(--muted);margin-bottom:4px;}
+.modal-example .calc-line{font-size:14px;color:var(--text);font-weight:600;margin:6px 0;}
+.modal-example .result-line{font-size:14px;color:var(--green);font-weight:700;}
+.modal-rules{margin-bottom:16px;}
+.modal-rules-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.modal-rule-item{font-size:13px;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border);line-height:1.5;}
+.modal-rule-item:last-child{border-bottom:none;}
+.modal-el-note{background:rgba(155,114,232,0.08);border:1px solid rgba(155,114,232,0.25);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--purple);margin-top:12px;}
+
+/* GROWTH */
+.growth-weight-box{background:rgba(232,160,32,0.07);border:1px solid rgba(232,160,32,0.25);border-radius:10px;padding:16px 20px;margin:16px 0;}
+.growth-weight-box h4{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:10px;letter-spacing:.04em;}
+.growth-weight-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;}
+.gwt{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;flex:1;min-width:160px;}
+.gwt-val{font-size:20px;font-weight:900;color:var(--gold);}
+.gwt-label{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* READINESS */
+.readiness-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.readiness-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;}
+.readiness-card h3{font-size:16px;font-weight:700;margin-bottom:16px;}
+.readiness-table{width:100%;border-collapse:collapse;font-size:13px;}
+.readiness-table th{padding:7px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border2);}
+.readiness-table td{padding:8px 10px;border-bottom:1px solid var(--border);}
+.readiness-table tr:last-child td{border-bottom:none;}
+
+/* AT-RISK */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
+.risk-card{border-radius:12px;padding:20px;border:1px solid;}
+.risk-f{background:rgba(232,84,84,0.07);border-color:rgba(232,84,84,0.3);}
+.risk-csi{background:rgba(232,120,48,0.07);border-color:rgba(232,120,48,0.3);}
+.risk-tsi{background:rgba(232,160,32,0.07);border-color:rgba(232,160,32,0.3);}
+.risk-atsi{background:rgba(155,114,232,0.07);border-color:rgba(155,114,232,0.3);}
+.risk-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
+.risk-f .risk-label{color:#e85454;}.risk-csi .risk-label{color:#e87830;}
+.risk-tsi .risk-label{color:#e8a020;}.risk-atsi .risk-label{color:#9b72e8;}
+.risk-card h4{font-size:15px;font-weight:700;margin-bottom:8px;}
+.risk-card p{font-size:13px;color:var(--muted);line-height:1.5;}
+
+/* ACCREDITATION */
+.accred-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.accred-card{border-radius:14px;padding:24px;border:1px solid;}
+.acc-green{background:rgba(39,201,106,0.06);border-color:rgba(39,201,106,0.25);}
+.acc-gold{background:rgba(232,160,32,0.06);border-color:rgba(232,160,32,0.25);}
+.acc-red{background:rgba(232,84,84,0.06);border-color:rgba(232,84,84,0.25);}
+.accred-card h3{font-size:16px;font-weight:700;margin-bottom:8px;}
+.acc-green h3{color:#27c96a;}.acc-gold h3{color:#e8a020;}.acc-red h3{color:#e85454;}
+.accred-card p{font-size:13px;color:var(--muted);line-height:1.5;}
+
+/* CALCULATOR */
+.calc-box{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:28px;}
+.calc-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;}
+.calc-header h3{font-size:18px;font-weight:700;}
+.calc-toggle{display:flex;background:rgba(255,255,255,0.05);border-radius:20px;padding:3px;gap:3px;}
+.calc-toggle-btn{padding:7px 18px;border-radius:16px;border:none;background:transparent;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;}
+.calc-toggle-btn.active{background:var(--blue);color:#fff;}
+.slider-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.slider-row label{flex:0 0 260px;font-size:13px;color:var(--muted);line-height:1.3;}
+.slider-row input[type=range]{flex:1;accent-color:var(--blue);}
+.slider-val{width:48px;text-align:right;font-size:14px;font-weight:700;color:var(--text);}
+.calc-result-bar{background:rgba(255,255,255,0.04);border-radius:12px;padding:20px;margin-top:8px;text-align:center;}
+.calc-score-big{font-size:52px;font-weight:900;line-height:1;}
+.calc-grade-lbl{font-size:18px;font-weight:700;margin-top:4px;margin-bottom:4px;}
+.calc-desc{font-size:13px;color:var(--muted);}
+
+/* UTILITY */
+.info-box{background:rgba(45,125,210,0.07);border:1px solid rgba(45,125,210,0.2);border-radius:10px;padding:16px 20px;font-size:13px;color:var(--muted);line-height:1.6;margin:16px 0;}
+.info-box strong{color:var(--blue-light);}
+.warn-box{background:rgba(232,120,48,0.07);border:1px solid rgba(232,120,48,0.25);border-radius:10px;padding:16px 20px;font-size:13px;color:var(--muted);line-height:1.6;margin:16px 0;}
+.warn-box strong{color:var(--orange);}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;}
+.tag-blue{background:rgba(45,125,210,0.15);color:var(--blue-light);}
+.tag-gold{background:rgba(232,160,32,0.15);color:var(--gold);}
+.tag-green{background:rgba(39,201,106,0.15);color:var(--green);}
+.tag-red{background:rgba(232,84,84,0.15);color:var(--red);}
+.tag-purple{background:rgba(155,114,232,0.15);color:var(--purple);}
+
+/* FOOTER */
+.site-footer{background:rgba(255,255,255,0.02);border-top:1px solid var(--border);padding:32px 24px;text-align:center;}
+.site-footer p{font-size:12px;color:var(--muted);line-height:1.8;}
+.site-footer a{color:var(--blue-light);text-decoration:none;}
+.version-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(45,125,210,0.1);border:1px solid rgba(45,125,210,0.25);border-radius:12px;padding:4px 12px;font-size:11px;color:var(--blue-light);font-weight:700;margin-top:10px;}
+
+@media(max-width:700px){
+  .site-nav{display:none;}
+  .hamburger-btn{display:flex;}
+  .slider-row label{flex:0 0 160px;font-size:12px;}
+  .calc-toggle{flex-direction:column;border-radius:12px;}
+  .hero{padding:48px 16px 40px;}
+  .section{padding:48px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- UPDATE BANNER -->
+<div class="update-banner" id="update-banner">
+  <span>📲 New version available — updated MDE Accountability standards</span>
+  <button class="update-btn" onclick="applyUpdate()">Update Now</button>
+  <button class="update-dismiss" onclick="dismissUpdate()" aria-label="Dismiss">×</button>
+</div>
+
+<!-- INSTALL BANNER -->
+<div class="install-banner" id="install-banner">
+  <div class="install-banner-text">
+    <strong>Add to Home Screen</strong>
+    <span>Install for offline access on any device</span>
+  </div>
+  <button class="install-btn" onclick="installApp()">Install App</button>
+  <button class="install-dismiss" onclick="dismissInstall()" aria-label="Dismiss">×</button>
+</div>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+  <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Close menu">✕</button>
+  <a href="#model" onclick="closeMobileNav()">📊 Which Model?</a>
+  <a href="#components" onclick="closeMobileNav()">🧩 Components</a>
+  <a href="#growth" onclick="closeMobileNav()">📈 Growth</a>
+  <a href="#fay" onclick="closeMobileNav()">📅 FAY &amp; Transfers</a>
+  <a href="#grades" onclick="closeMobileNav()">🅰️ A–F Grades</a>
+  <a href="#readiness" onclick="closeMobileNav()">🎯 Readiness</a>
+  <a href="#atrisk" onclick="closeMobileNav()">⚠️ At-Risk</a>
+  <a href="#accreditation" onclick="closeMobileNav()">🏛️ Accreditation</a>
+  <a href="#calculator" onclick="closeMobileNav()">🧮 Calculator</a>
+</nav>
+
+<!-- SITE HEADER -->
+<header class="site-header">
+  <a class="site-logo" href="https://principalyeager.com" target="_blank" rel="noopener">
+    <div class="logo-badge">PY</div>
+    <div>
+      <div class="logo-text">PrincipalYeager.com</div>
+      <div class="logo-sub">School Leaders Think Tank</div>
+    </div>
+  </a>
+  <nav class="site-nav">
+    <a href="#model">Which Model?</a>
+    <a href="#components">Components</a>
+    <a href="#growth">Growth</a>
+    <a href="#fay">FAY &amp; Transfers</a>
+    <a href="#grades">A–F Grades</a>
+    <a href="#readiness">Readiness</a>
+    <a href="#atrisk">At-Risk</a>
+    <a href="#accreditation">Accreditation</a>
+    <a href="#calculator">Calculator</a>
+  </nav>
+  <button class="hamburger-btn" onclick="openMobileNav()" aria-label="Open menu">☰</button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">📊 Effective 2025–2026 School Year</div>
+  <h1>Mississippi's <span>Accountability System</span><br/>Decoded for School Leaders</h1>
+  <p class="hero-sub">Everything a principal needs to understand the MDE 2025 Accountability Standards — models, components, FAY rules, formulas, growth weights, and letter grades. All facts tied directly to the document.</p>
+  <p class="hero-doc-note">Source: Mississippi Public School Accountability Standards 2025 · Revised January 13, 2026 · Business Rules §1–§28 · Policy §2–§3</p>
+  <div style="margin-bottom:8px;"><span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">ES/MS Grade Scale (700-pt) · §1.2</span></div>
+  <div class="grade-summary">
+    <div class="grade-pill gp-a">A ≥ 457</div>
+    <div class="grade-pill gp-b">B 402–456</div>
+    <div class="grade-pill gp-c">C 352–401</div>
+    <div class="grade-pill gp-d">D 277–351</div>
+    <div class="grade-pill gp-f">F &lt; 277</div>
+  </div>
+  <div style="margin:14px 0 8px;"><span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">HS Grade Scale (1,000-pt) · §1.3</span></div>
+  <div class="grade-summary">
+    <div class="grade-pill gp-a">A ≥ 769</div>
+    <div class="grade-pill gp-b">B 689–768</div>
+    <div class="grade-pill gp-c">C 627–688</div>
+    <div class="grade-pill gp-d">D 567–626</div>
+    <div class="grade-pill gp-f">F &lt; 567</div>
+  </div>
+</section>
+
+<!-- WHICH MODEL -->
+<hr class="section-divider" id="model"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">MDE 2025 · Page 37 · Effective 2025–2026</div>
+    <h2>Which Accountability Model Applies to Your School?</h2>
+    <p>Mississippi uses two point-based models. The model depends on whether your school serves students in 12th grade.</p>
+  </div>
+  <div class="model-tabs">
+    <button class="model-tab active" onclick="switchModel('es')">🏫 700-Point Model (No Grade 12)</button>
+    <button class="model-tab" onclick="switchModel('hs')">🎓 1,000-Point Model (Includes Grade 12)</button>
+  </div>
+  <div id="model-es" class="model-panel active">
+    <div class="card-grid card-grid-2">
+      <div class="card" style="border-color:rgba(45,125,210,0.35);">
+        <div class="card-icon">🏫</div>
+        <div class="card-label">Schools Without Grade 12</div>
+        <h3>700-Point Model</h3>
+        <p>Applies to elementary, middle, and K–8 schools. Scored on <strong>7 components</strong>, each worth 100 points (700 total). Reading and Math each have two growth components: one for all students, one for the Lowest Performing 25% subgroup.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">The 7 Components (per MDE document p. 37)</div>
+        <h3 style="margin-bottom:14px;">700-Point Components</h3>
+        <ol style="font-size:13px;color:var(--muted);padding-left:18px;line-height:2;">
+          <li>Reading Proficiency</li>
+          <li>Reading Growth – All Students</li>
+          <li>Reading Growth – Lowest Performing 25% Student Subgroup</li>
+          <li>Math Proficiency</li>
+          <li>Math Growth – All Students</li>
+          <li>Math Growth – Lowest Performing 25% Student Subgroup</li>
+          <li>Science Proficiency</li>
+        </ol>
+        <div class="info-box" style="margin-top:12px;">Each component = 100 points max · Total = 700 pts</div>
+      </div>
+    </div>
+  </div>
+  <div id="model-hs" class="model-panel">
+    <div class="card-grid card-grid-2">
+      <div class="card" style="border-color:rgba(39,201,106,0.35);">
+        <div class="card-icon">🎓</div>
+        <div class="card-label">Schools With Grade 12</div>
+        <h3>1,000-Point Model</h3>
+        <p>Applies to high schools and K–12 schools. Scored on <strong>9 components</strong>. Graduation Rate is worth 200 points (×2.0 multiplier). Readiness is worth 150 points total (three 50-pt sub-components).</p>
+      </div>
+      <div class="card">
+        <div class="card-label">The 9 Components (per MDE document p. 37)</div>
+        <h3 style="margin-bottom:14px;">1,000-Point Components</h3>
+        <ol style="font-size:13px;color:var(--muted);padding-left:18px;line-height:2;">
+          <li>Reading Proficiency <span style="color:var(--blue-light);">(100 pts)</span></li>
+          <li>Reading Growth – All Students <span style="color:var(--blue-light);">(100 pts)</span></li>
+          <li>Reading Growth – LP25% Subgroup <span style="color:var(--blue-light);">(100 pts)</span></li>
+          <li>Math Proficiency <span style="color:var(--blue-light);">(100 pts)</span></li>
+          <li>Math Growth – All Students <span style="color:var(--blue-light);">(100 pts)</span></li>
+          <li>Math Growth – LP25% Subgroup <span style="color:var(--blue-light);">(100 pts)</span></li>
+          <li>Science Proficiency <span style="color:var(--gold);">(50 pts)</span></li>
+          <li>Graduation Rate – All Students <span style="color:var(--green);">(200 pts · ×2.0)</span></li>
+          <li>Readiness: Acceleration + Achievement + Assessment <span style="color:var(--orange);">(150 pts)</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="warn-box" style="margin-top:16px;"><strong>⚠️ Key difference from the ES/MS model:</strong> Science Proficiency drops to 50 points (not 100) in the HS model. Readiness is 150 points total — three sub-components at 50 pts each.</div>
+  </div>
+</div>
+
+<!-- COMPONENTS -->
+<hr class="section-divider" id="components"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Business Rules §5 · §6 · §7 · §8 · §9</div>
+    <h2>What Is Your School Scored On?</h2>
+    <p>Tap any component card to open the formula — numerator, denominator, multiplier, worked example, and key rules.</p>
+  </div>
+  <h3 style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Both Models (700-pt and 1,000-pt)</h3>
+  <div class="comp-grid" style="margin-bottom:24px;">
+    <div class="comp-card" onclick="openFormula('c1')"><div class="comp-pts" style="color:var(--blue-light);">100 pts · §5</div><div class="comp-name">📖 Reading Proficiency</div><div class="comp-rule">Both models · FAY students only</div><span class="comp-badge tag-blue">Proficiency</span></div>
+    <div class="comp-card" onclick="openFormula('c2')"><div class="comp-pts" style="color:var(--gold);">100 pts · §6</div><div class="comp-name">📈 Reading Growth — All Students</div><div class="comp-rule">Both models · Prior-year score required</div><span class="comp-badge tag-gold">Growth</span></div>
+    <div class="comp-card" onclick="openFormula('c3')"><div class="comp-pts" style="color:var(--gold);">100 pts · §6 · §7</div><div class="comp-name">📈 Reading Growth — LP 25% Subgroup</div><div class="comp-rule">Both models · Lowest Performing 25%</div><span class="comp-badge tag-gold">Growth · LP25</span></div>
+    <div class="comp-card" onclick="openFormula('c4')"><div class="comp-pts" style="color:var(--teal);">100 pts · §5</div><div class="comp-name">➕ Math Proficiency</div><div class="comp-rule">Both models · FAY students only</div><span class="comp-badge tag-blue">Proficiency</span></div>
+    <div class="comp-card" onclick="openFormula('c5')"><div class="comp-pts" style="color:var(--gold);">100 pts · §6</div><div class="comp-name">📊 Math Growth — All Students</div><div class="comp-rule">Both models · Prior-year score required</div><span class="comp-badge tag-gold">Growth</span></div>
+    <div class="comp-card" onclick="openFormula('c6')"><div class="comp-pts" style="color:var(--gold);">100 pts · §6 · §7</div><div class="comp-name">📊 Math Growth — LP 25% Subgroup</div><div class="comp-rule">Both models · Lowest Performing 25%</div><span class="comp-badge tag-gold">Growth · LP25</span></div>
+  </div>
+  <h3 style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">ES/MS Model Only</h3>
+  <div class="comp-grid" style="margin-bottom:24px;">
+    <div class="comp-card" onclick="openFormula('c7es')"><div class="comp-pts" style="color:var(--green);">100 pts · §5</div><div class="comp-name">🔬 Science Proficiency</div><div class="comp-rule">ES/MS model · 100 pts here</div><span class="comp-badge tag-green">Science · ES/MS</span></div>
+  </div>
+  <h3 style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">HS Model Only (with 12th Grade)</h3>
+  <div class="comp-grid">
+    <div class="comp-card" onclick="openFormula('c7hs')"><div class="comp-pts" style="color:var(--green);">50 pts · §5.1.1</div><div class="comp-name">🔬 Science Proficiency</div><div class="comp-rule">HS model only · 50 pts (×0.5 multiplier)</div><span class="comp-badge tag-green">Science · HS</span></div>
+    <div class="comp-card" onclick="openFormula('c8')"><div class="comp-pts" style="color:var(--green);">200 pts · §8 (×2.0 multiplier)</div><div class="comp-name">🎓 Graduation Rate — All Students</div><div class="comp-rule">HS model only · 4-year adjusted cohort</div><span class="comp-badge tag-green">Grad Rate · HS</span></div>
+    <div class="comp-card" onclick="openFormula('c9')"><div class="comp-pts" style="color:var(--orange);">150 pts total · §9 · §25 · §26</div><div class="comp-name">🎯 Readiness Indicator</div><div class="comp-rule">HS model only · Acceleration + Achievement + Assessment</div><span class="comp-badge" style="background:rgba(232,120,48,0.15);color:var(--orange);">Readiness · HS</span></div>
+  </div>
+  <div class="info-box" style="margin-top:24px;"><strong>Participation Rate (§4.1):</strong> If fewer than 95% of enrolled students test, the denominator for all proficiency components is automatically set to 95% of enrollment — reducing points. Also triggers an automatic drop of one performance classification (letter grade). &nbsp;|&nbsp; <strong>N-Count (§3.1.1):</strong> Minimum of 10 valid test scores per component. If not met, up to 3 years of prior data can be combined.</div>
+</div>
+
+<!-- GROWTH -->
+<hr class="section-divider" id="growth"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Business Rule §6 · §6.2 · §6.8</div>
+    <h2>How Is Student Growth Actually Calculated?</h2>
+    <p>Growth in Mississippi is not a percentile ranking — it is a binary determination of whether each student moved up in proficiency level from one year to the next.</p>
+  </div>
+  <div class="card-grid card-grid-2" style="margin-bottom:24px;">
+    <div class="card" style="border-color:rgba(232,160,32,0.3);">
+      <div class="card-label">§6.1 — What Counts as Growth?</div>
+      <h3 style="color:var(--gold);">Growth = Proficiency Level Movement</h3>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;">A student is counted as meeting growth if they meet ANY of the following:</p>
+      <ul style="font-size:13px;color:var(--muted);padding-left:18px;margin-top:8px;line-height:1.9;">
+        <li>An increase of <strong>ANY</strong> performance/proficiency level</li>
+        <li><strong>Staying at Proficient</strong> from one year to the next</li>
+        <li>An increase within the lowest 3 levels that <strong>crosses the midpoint</strong> of a level</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(232,84,84,0.3);">
+      <div class="card-label">§6.3 · §6.8 — What Does NOT Count</div>
+      <h3 style="color:var(--red);">No Growth / No Calculation</h3>
+      <ul style="font-size:13px;color:var(--muted);padding-left:18px;margin-top:8px;line-height:1.9;">
+        <li>Any <strong>decrease</strong> in performance level = 0 (§6.3)</li>
+        <li>Students with <strong>no prior-year Mississippi score</strong> excluded entirely (§6.8)</li>
+        <li>Students taking the <strong>Alternate Assessment</strong> this year who took the general assessment last year (§6.14)</li>
+        <li>Students in the <strong>first tested grade</strong> have no baseline</li>
+      </ul>
+    </div>
+  </div>
+  <div class="growth-weight-box">
+    <h4>📊 Business Rule §6.2 — Individual Student Growth Weights</h4>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">Additional weight of <strong>1.25</strong> applied in the numerator for exceptional growth. This is a per-student calculation, not school-level.</p>
+    <div class="growth-weight-row">
+      <div class="gwt"><div class="gwt-val">1.0</div><div class="gwt-label">Standard: Meets growth criteria above</div></div>
+      <div class="gwt"><div class="gwt-val">1.25</div><div class="gwt-label">Enhanced: Stays at Advanced year-to-year</div></div>
+      <div class="gwt"><div class="gwt-val">1.25</div><div class="gwt-label">Enhanced: Increases 2+ proficiency levels</div></div>
+      <div class="gwt"><div class="gwt-val">1.25</div><div class="gwt-label">Enhanced: Reaches the highest proficiency level</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:12px;">No accountability component may exceed its allocated maximum points (§6.2 note).</p>
+  </div>
+  <div class="info-box"><strong>LP25% Subgroup Components (§7):</strong> The Lowest Performing 25% Student Subgroup is identified separately for Reading and Math at each school — prior-year standardized scores placing students in the bottom 25% within each grade. Growth for this subgroup is a separate, dedicated component in both models.</div>
+</div>
+
+<!-- FAY -->
+<hr class="section-divider" id="fay"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Business Rule §2 — Full Academic Year</div>
+    <h2>Does Your Student's Score Count? Understanding FAY &amp; Transfers</h2>
+    <p>The Full Academic Year rule determines which students are included in accountability calculations. Per §2.1: enrollment is regardless of attendance.</p>
+  </div>
+  <div class="fay-timeline">
+    <div class="fay-tm-item"><div class="fay-tm-dot">📅</div><div class="fay-tm-label">FAY Start</div><div class="fay-tm-date">September 1</div><div class="fay-tm-note">Window opens (traditional calendar)</div></div>
+    <div class="fay-tm-item"><div class="fay-tm-dot">⏰</div><div class="fay-tm-label">75% Threshold</div><div class="fay-tm-date">~Day 170</div><div class="fay-tm-note">Must be enrolled ≥75% of Sept 1→ testing</div></div>
+    <div class="fay-tm-item"><div class="fay-tm-dot">🗓️</div><div class="fay-tm-label">Enroll By</div><div class="fay-tm-date">~Late October*</div><div class="fay-tm-note">Latest enrollment date to still meet 75%</div></div>
+    <div class="fay-tm-item"><div class="fay-tm-dot">✏️</div><div class="fay-tm-label">Testing Window</div><div class="fay-tm-date">Spring</div><div class="fay-tm-note">MDE publishes specific date annually</div></div>
+    <div class="fay-tm-item"><div class="fay-tm-dot">✅</div><div class="fay-tm-label">FAY Met?</div><div class="fay-tm-date">Score Attributed</div><div class="fay-tm-note">Goes to school where FAY was met (§2.4)</div></div>
+  </div>
+  <p style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:28px;">*Exact date published yearly by MDE. §2.1 Note: 74.5% will NOT be rounded up to 75%. §2.3: Weekends and holidays are included in the calculation.</p>
+  <div class="fay-highlight"><strong>§2.1 — The Core Rule:</strong> A student meets FAY when enrolled (regardless of attendance) for at least <strong>75% of calendar days</strong> from September 1 through the first day of state testing. For 4×4 block-scheduled courses, FAY is calculated differently — see §2.2.</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin-bottom:16px;">Key FAY Business Rules</h3>
+  <div class="fay-rules-grid">
+    <div class="fay-rule-card"><div class="fay-rule-num">§2.1 — The 75% Rule</div><h4>Enrollment, Not Attendance</h4><p>Enrollment is measured regardless of attendance. Days are calendar days — weekends and holidays count. 74.5% does NOT round up to 75%.</p></div>
+    <div class="fay-rule-card"><div class="fay-rule-num">§2.2 — 4×4 Block Schedules</div><h4>Different FAY Windows</h4><p>Fall semester FAY = Sept 1 → first day of Fall primary testing. Spring semester FAY = Feb 1 → first day of Spring testing. MDE publishes these dates annually.</p></div>
+    <div class="fay-rule-card"><div class="fay-rule-num">§2.4 — Inter-School Transfer</div><h4>Score Follows FAY School</h4><p>If a student meets FAY at School A but tests at School B, the score is attributed to School A. The school where FAY was met receives the accountability impact.</p></div>
+    <div class="fay-rule-card"><div class="fay-rule-num">§2.5 — No FAY Anywhere</div><h4>Score Not Counted</h4><p>If a student does not meet FAY at any school, that student's assessment score is excluded from all school accountability calculations for that year.</p></div>
+    <div class="fay-rule-card"><div class="fay-rule-num">§2.6 — District-Level FAY</div><h4>Within-District Combining</h4><p>A student who transfers within a district may meet FAY for the district (combined days) but not for either individual school. District scores are separate from school scores.</p></div>
+    <div class="fay-rule-card"><div class="fay-rule-num">§2.7 — Same-Day Enrollment/Withdrawal</div><h4>One Day Counted</h4><p>If a student enrolls and withdraws on the same day, that student is counted as having been enrolled for one (1) calendar day at the receiving school.</p></div>
+    <div class="fay-rule-card"><div class="fay-rule-num">§2.10 — Dropout &amp; Re-Enrollment</div><h4>FAY Clock Resets</h4><p>If a student drops out and re-enrolls within the same school year, the re-entry date becomes the new enrollment date. Days accumulated before dropout are not carried forward.</p></div>
+    <div class="fay-rule-card"><div class="fay-rule-num">§2.11 — Concurrent Enrollment</div><h4>Counted at Both Locations</h4><p>Concurrent enrollment in more than one school or district is included in FAY calculations at both locations.</p></div>
+    <div class="fay-rule-card"><div class="fay-rule-num">§6.8 — Growth Without Prior Score</div><h4>Out-of-State Transfers</h4><p>A student without a prior-year Mississippi assessment score is excluded from all growth calculations. No out-of-state score substitution accepted.</p></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px;">Transfer Scenarios: Does the Score Count?</h3>
+  <div class="scenario-tabs">
+    <button class="sc-tab active" onclick="switchScenario(0)">🌐 Out-of-State Transfer</button>
+    <button class="sc-tab" onclick="switchScenario(1)">🏫 In-State, Same District</button>
+    <button class="sc-tab" onclick="switchScenario(2)">🏘️ In-State, Different District</button>
+    <button class="sc-tab" onclick="switchScenario(3)">📝 Met FAY, Then Transferred</button>
+    <button class="sc-tab" onclick="switchScenario(4)">🔄 Dropout &amp; Re-Enrollment</button>
+  </div>
+  <div id="sc-0" class="sc-panel active">
+    <h4>🌐 Scenario 1: Out-of-State Transfer</h4>
+    <span class="sc-rule-tag">§2.1</span><span class="sc-rule-tag">§6.8</span>
+    <p>A student moves from another state and enrolls at your school. They have never taken a Mississippi state assessment.</p>
+    <p><strong>Proficiency (§2.1):</strong> If enrolled early enough to accumulate ≥75% of calendar days from Sept 1 to the first day of testing, their proficiency score COUNTS.</p>
+    <p><strong>Growth (§6.8):</strong> No Growth score can be calculated — ever — in the first year. There is no prior-year Mississippi baseline. The student is excluded from ALL four growth components. A prior-state score is not accepted as a substitute.</p>
+    <div class="sc-verdict partial">⚠️ Proficiency: Counts IF enrolled by FAY deadline. Growth: EXCLUDED in year of transfer — no exceptions.</div>
+  </div>
+  <div id="sc-1" class="sc-panel">
+    <h4>🏫 Scenario 2: In-State Transfer — Same District</h4>
+    <span class="sc-rule-tag">§2.6</span><span class="sc-rule-tag">§2.4</span><span class="sc-rule-tag">§2.5</span>
+    <p>A student transfers in January from School A to School B within the same district. Neither school alone reaches the 75% threshold (170 days of a 226-day window).</p>
+    <p><strong>District-Level FAY (§2.6):</strong> The district combines both schools' days. If combined = 100% of the window, the student meets DISTRICT-level FAY only.</p>
+    <p><strong>Score attribution (§2.4):</strong> Score is not attributed to either school individually — it counts only at the district level.</p>
+    <div class="sc-verdict partial">⚠️ School Level: Score excluded at both schools. District Level: Score counts if combined days met district FAY.</div>
+  </div>
+  <div id="sc-2" class="sc-panel">
+    <h4>🏘️ Scenario 3: In-State Transfer — Different Districts</h4>
+    <span class="sc-rule-tag">§2.4</span><span class="sc-rule-tag">§2.5</span>
+    <p>A student was enrolled at School A (District 1) from September 1 through March 1 — approximately 181 calendar days of a 226-day window (80.1%). They transfer to School B (District 2) and sit for the exam there.</p>
+    <p><strong>FAY determination:</strong> 181 ÷ 226 = 80.1% at School A — exceeds 75%. FAY is met at School A.</p>
+    <p><strong>Score attribution (§2.4):</strong> Even though the student tests at School B, the score is attributed to School A. School B receives no data from this student.</p>
+    <div class="sc-verdict yes">✅ Score COUNTS — attributed to School A (where FAY was met). School B receives no data from this student.</div>
+  </div>
+  <div id="sc-3" class="sc-panel">
+    <h4>📝 Scenario 4: Student Met FAY, Then Transferred Before Testing</h4>
+    <span class="sc-rule-tag">§2.4</span>
+    <p>A student enrolled September 1 at School A and accumulated 75%+ before the testing window — FAY is established. They then transfer to School B in March and test there.</p>
+    <p><strong>FAY cannot be "un-met."</strong> Once the 75% threshold is reached, the designation is locked. The subsequent transfer does not change the FAY determination at School A.</p>
+    <div class="sc-verdict yes">✅ Score COUNTS for School A. FAY is a threshold determination — once met, it cannot be reversed by a subsequent transfer.</div>
+  </div>
+  <div id="sc-4" class="sc-panel">
+    <h4>🔄 Scenario 5: Dropout and Re-Enrollment</h4>
+    <span class="sc-rule-tag">§2.10</span>
+    <p>A student enrolled September 1, attended through November 30 (91 days), then dropped out. Re-enrolled February 1, remaining through testing (73 days).</p>
+    <p><strong>§2.10 — Clock Resets at Re-Entry:</strong> The 91 days before dropout are forfeited. FAY calculation begins from February 1. 73 ÷ 226 = 32.3% — FAY NOT met.</p>
+    <div class="sc-verdict no">❌ Score does NOT count. Dropout resets the FAY enrollment clock per §2.10. Pre-dropout days cannot be combined with post-re-enrollment days.</div>
+  </div>
+
+  <!-- FAY Calculator -->
+  <div class="fay-calc" style="margin-top:36px;">
+    <h3>🗓️ FAY Enrollment Date Calculator</h3>
+    <p class="fay-calc-sub">Enter the student's enrollment date and the MDE-published first day of testing to instantly determine FAY status. Per §2.1, 74.5% will NOT round up to 75%.</p>
+    <div class="fay-form">
+      <div class="fay-field">
+        <label>School Year</label>
+        <select id="fay-year">
+          <option value="2025">2025–2026</option>
+          <option value="2026">2026–2027</option>
+          <option value="2027">2027–2028</option>
+        </select>
+      </div>
+      <div class="fay-field">
+        <label>Student Enrollment Date</label>
+        <input type="date" id="fay-enroll" value="2025-10-27"/>
+      </div>
+      <div class="fay-field">
+        <label>First Day of Testing (MDE-published)</label>
+        <input type="date" id="fay-test" value="2026-04-15"/>
+      </div>
+    </div>
+    <button class="fay-calc-btn" onclick="calcFAY()">Calculate FAY Status</button>
+    <div class="fay-result" id="fay-result">
+      <div class="fay-result-line" id="fay-window-line"></div>
+      <div class="fay-result-line" id="fay-threshold-line"></div>
+      <div class="fay-result-line" id="fay-enrolled-line"></div>
+      <div class="fay-result-line" id="fay-pct-line"></div>
+      <div class="fay-result-verdict" id="fay-verdict"></div>
+    </div>
+  </div>
+</div>
+
+<!-- A–F GRADES -->
+<hr class="section-divider" id="grades"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Business Rules §1.2 · §1.3 · §1.4</div>
+    <h2>How Do Points Translate to Letter Grades?</h2>
+    <p>The cut scores below are taken directly from the MDE 2025 document. These reflect 700 and 1,000 point totals respectively.</p>
+  </div>
+  <div class="card-grid card-grid-3">
+    <div class="card">
+      <div class="card-label">§1.2 · Schools Without 12th Grade · Effective 2016–2017</div>
+      <h3 style="margin-bottom:16px;">ES &amp; MS Grade Scale (700 pts)</h3>
+      <table class="grade-table">
+        <thead><tr><th>Grade</th><th>Cut Score</th><th>Range</th></tr></thead>
+        <tbody>
+          <tr><td class="g-a">A</td><td>≥ 457</td><td>457–700</td></tr>
+          <tr><td class="g-b">B</td><td>402 ≤ &lt; 457</td><td>402–456</td></tr>
+          <tr><td class="g-c">C</td><td>352 ≤ &lt; 402</td><td>352–401</td></tr>
+          <tr><td class="g-d">D</td><td>277 ≤ &lt; 352</td><td>277–351</td></tr>
+          <tr><td class="g-f">F</td><td>&lt; 277</td><td>0–276</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-label">§1.3 · Schools With 12th Grade · Effective 2017–2018</div>
+      <h3 style="margin-bottom:16px;">HS Grade Scale (1,000 pts)</h3>
+      <table class="grade-table">
+        <thead><tr><th>Grade</th><th>Cut Score</th><th>Range</th></tr></thead>
+        <tbody>
+          <tr><td class="g-a">A</td><td>≥ 769</td><td>769–1,000</td></tr>
+          <tr><td class="g-b">B</td><td>689 ≤ &lt; 769</td><td>689–768</td></tr>
+          <tr><td class="g-c">C</td><td>627 ≤ &lt; 689</td><td>627–688</td></tr>
+          <tr><td class="g-d">D</td><td>567 ≤ &lt; 627</td><td>567–626</td></tr>
+          <tr><td class="g-f">F</td><td>&lt; 567</td><td>0–566</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-label">§1.4 · Districts · Effective 2016–2017</div>
+      <h3 style="margin-bottom:16px;">District Grade Scale</h3>
+      <table class="grade-table">
+        <thead><tr><th>Grade</th><th>Cut Score</th><th>Range</th></tr></thead>
+        <tbody>
+          <tr><td class="g-a">A</td><td>≥ 694</td><td>694–1,000</td></tr>
+          <tr><td class="g-b">B</td><td>642 ≤ &lt; 694</td><td>642–693</td></tr>
+          <tr><td class="g-c">C</td><td>572 ≤ &lt; 642</td><td>572–641</td></tr>
+          <tr><td class="g-d">D</td><td>519 ≤ &lt; 572</td><td>519–571</td></tr>
+          <tr><td class="g-f">F</td><td>&lt; 519</td><td>0–518</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px;">Districts are calculated as one K–12 school (§1.5). District performance classification is separate from district accreditation status.</p>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-top:20px;"><strong>⚠️ Participation Rate Override (§4.1):</strong> Even if a school earns enough raw points for a higher letter grade, failure to meet the 95% participation threshold results in an automatic drop of ONE full performance classification (letter grade). This cannot be appealed on participation grounds alone.</div>
+  <div class="info-box"><strong>§1.1 — When Cut Scores Are Raised:</strong> MDE will increase the performance standards when student proficiency reaches 75% and/or when 65% of schools/districts earn a grade of B or higher. Cut scores are also reviewed following any new assessment implementation (§1.6).</div>
+</div>
+
+<!-- READINESS -->
+<hr class="section-divider" id="readiness"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Business Rules §9 · §25 · §26 — HS Model Only</div>
+    <h2>How Is the Readiness Indicator Calculated?</h2>
+    <p>The Readiness Indicator applies only to schools with 12th grade and is worth <strong>150 total points</strong> — three sub-components of 50 points each.</p>
+  </div>
+  <div class="readiness-grid">
+    <div class="readiness-card" style="border-color:rgba(232,120,48,0.3);">
+      <h3 style="color:var(--orange);">🚀 Acceleration (50 pts) · §9</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Percentage of eligible students taking AND passing accelerated courses. Numerator = students taking &amp; passing; Denominator = all students whose MSIS grade is 11th or 12th (§9.4.2). Score = (num ÷ den) × 50.</p>
+      <table class="readiness-table">
+        <thead><tr><th>Qualifying Course/Credential</th></tr></thead>
+        <tbody>
+          <tr><td>Advanced Placement (AP) — must score ≥3 on AP exam (§9.2)</td></tr>
+          <tr><td>International Baccalaureate (IB) — must score ≥4</td></tr>
+          <tr><td>AICE — must pass the exam</td></tr>
+          <tr><td>Dual Credit — grade of C or above (§9.2)</td></tr>
+          <tr><td>SBE-approved Industry Certification</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="readiness-card" style="border-color:rgba(45,125,210,0.3);">
+      <h3 style="color:var(--blue-light);">🎯 Assessment (50 pts) · §25</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Based on the ACT Superscore, ACT NCRC, SAT, or ASVAB scores at end of month 9. Each student receives a value between 0 and 1. Denominator = all Senior Snapshot students (§25.5).</p>
+      <table class="readiness-table">
+        <thead><tr><th>Score</th><th>ACT</th><th>SAT</th><th>NCRC</th><th>ASVAB</th></tr></thead>
+        <tbody>
+          <tr><td><strong>0</strong></td><td>&lt;15</td><td>&lt;850</td><td>None</td><td>&lt;31</td></tr>
+          <tr><td><strong>.25</strong></td><td>15–16</td><td>850–929</td><td>Bronze</td><td>31–49</td></tr>
+          <tr><td><strong>.50</strong></td><td>17–19</td><td>930–1039</td><td>Silver</td><td>50–64</td></tr>
+          <tr><td><strong>.75</strong></td><td>20–24</td><td>1040–1209</td><td>Gold</td><td>65–92</td></tr>
+          <tr><td><strong>1.0</strong></td><td>≥25</td><td>≥1210</td><td>Platinum</td><td>≥93</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="readiness-card" style="border-color:rgba(26,188,176,0.3);">
+      <h3 style="color:var(--teal);">📋 Achievement (50 pts) · §26</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Based on withdrawal/completion status by June 30 of the senior year. Each student receives a value between 0 and 1. Denominator = all Senior Snapshot students (§26.1).</p>
+      <table class="readiness-table">
+        <thead><tr><th>Score</th><th>Student Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>0</strong></td><td>No qualifying completion</td></tr>
+          <tr><td><strong>.25</strong></td><td>Diploma equivalency or Traditional diploma in 5th year</td></tr>
+          <tr><td><strong>.50</strong></td><td>Traditional diploma or Alternate diploma (4 yr)</td></tr>
+          <tr><td><strong>.75</strong></td><td>Diploma with Academic, CTE, or JROTC endorsement</td></tr>
+          <tr><td><strong>1.0</strong></td><td>Distinguished Diploma (§26.5)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="info-box" style="margin-top:16px;"><strong>Senior Snapshot (§27):</strong> Captures ALL students continuously enrolled from month 1 of 10th grade through month 9 of 12th grade (or until a completion status is entered). Beginning 2025-2026, students with dropout status entered in month 9 of 11th grade or at any time in 12th grade are also included (§27.3). Senior Snapshot defines the population used in Readiness calculations — it is NOT a separate scored component.</div>
+</div>
+
+<!-- AT-RISK -->
+<hr class="section-divider" id="atrisk"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Policy §3.4 · Business Rules §11 · §12 · §13</div>
+    <h2>Which Schools Are Identified for Intervention?</h2>
+    <p>Schools identified as At-Risk include those earning an F under state accountability AND those identified under federal ESSA requirements.</p>
+  </div>
+  <div class="risk-grid">
+    <div class="risk-card risk-f"><div class="risk-label">Mississippi Accountability · §3.4</div><h4>F-Rated School = School At-Risk</h4><p>A school earning an F under the SBE accountability system is automatically designated a School At-Risk per Miss. Code Ann. §§37-18-3 and 37-18-5. State intervention follows.</p></div>
+    <div class="risk-card risk-csi"><div class="risk-label">Federal ESSA · §11 · CSI</div><h4>Comprehensive Support &amp; Improvement</h4><p><strong>Method 1:</strong> Graduation rate ≤67% (3-year cycle). <strong>Method 2:</strong> Title IA school in bottom 5% of overall accountability index. <strong>Method 3:</strong> Previously ATSI school failing to exit after 3 years with 3 consecutive years of subgroup scores at or below the bottom 5% of Title IA schools (§11.3).</p></div>
+    <div class="risk-card risk-tsi"><div class="risk-label">Federal ESSA · §12 · TSI</div><h4>Targeted Support &amp; Improvement</h4><p>A school with a subgroup composite score in the lowest 50% of overall accountability AND in the lowest quartile of 3-year average gap-to-goal AND in the lowest quartile of 3-year improvement. Schools meeting all three criteria are rank-ordered; bottom 5% not already CSI are identified for TSI (§12.2).</p></div>
+    <div class="risk-card risk-atsi"><div class="risk-label">Federal ESSA · §13 · ATSI</div><h4>Additional Targeted Support</h4><p>A school where a subgroup's 3-year average performance is at or below the performance of all students in the lowest-performing 5% of Title IA schools statewide. Applies to any school — Title I or non-Title I. Identified on a 3-year cycle (§13.1).</p></div>
+  </div>
+  <div class="info-box" style="margin-top:20px;"><strong>District of Transformation (§2.9.3):</strong> The SBE may place a district into a District of Transformation if: (1) the district receives an "F" designation for 2 of 3 consecutive years, (2) a school/district receives D or F for all 4 consecutive years, (3) more than 50% of schools are School At-Risk in any one year, or (4) the district faces a serious lack of financial resources.</div>
+  <div class="info-box"><strong>ASD Dissolved (Footnote 1, p. 17):</strong> Pursuant to Miss. Code Ann. §37-17-6.1, the Mississippi Achievement School District was dissolved effective July 1, 2025. Schools previously in the ASD have returned to their home districts.</div>
+</div>
+
+<!-- ACCREDITATION -->
+<hr class="section-divider" id="accreditation"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Policy §2.3 · §2.5 · §2.8 · §2.9</div>
+    <h2>What Do District Accreditation Statuses Mean?</h2>
+    <p>District accreditation is separate from school performance classifications. Districts are accredited based on compliance with Process Standards and Accreditation Policies.</p>
+  </div>
+  <div class="accred-grid">
+    <div class="accred-card acc-green"><h3>✅ Accredited</h3><p>Assigned to a district that complies with Accreditation Policies and <strong>100%</strong> of Process Standards. Local board retains full governance authority.</p></div>
+    <div class="accred-card acc-gold"><h3>⚠️ Accredited on Probation</h3><p>Assigned when a district fails to comply with 100% of Accreditation Policies and Process Standards. The district must develop and implement a <strong>Corrective Action Plan (CAP)</strong> submitted within 60 calendar days of notification (§2.8.1).</p></div>
+    <div class="accred-card acc-red"><h3>🚨 Accreditation Withdrawn</h3><p>Assigned to a district previously on Probation that failed to comply with its CAP — or placed in a District of Transformation. Status listed as <strong>WITHDRAWN NOT ACCREDITED</strong>. District may petition for reinstatement on January 1 or July 1 (§2.8.2.5).</p></div>
+  </div>
+  <div class="info-box" style="margin-top:20px;"><strong>Immediate Downgrade Triggers (§2.5):</strong> Certain violations can immediately downgrade accreditation status, including: reporting false information (§2.1), failure to comply with test security procedures (Standard 16), failure to comply with graduation requirements (Standard 14), and violations of Standards 29, 30, and 31 related to safe school climate.</div>
+</div>
+
+<!-- SCORE CALCULATOR -->
+<hr class="section-divider" id="calculator"/>
+<div class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Interactive Tool — Based on MDE 2025 Components &amp; Cut Scores</div>
+    <h2>Estimate Your School's Accountability Score</h2>
+    <p>Adjust each component to project your point total and likely letter grade. Uses the correct MDE component structure and official cut scores from §1.2 and §1.3.</p>
+  </div>
+  <div class="calc-box">
+    <div class="calc-header">
+      <h3>School Score Estimator</h3>
+      <div class="calc-toggle">
+        <button class="calc-toggle-btn active" id="calc-es-btn" onclick="switchCalc('es')">ES/MS (700 pts)</button>
+        <button class="calc-toggle-btn" id="calc-hs-btn" onclick="switchCalc('hs')">HS (1,000 pts)</button>
+      </div>
+    </div>
+    <div id="calc-sliders"></div>
+    <div class="calc-result-bar">
+      <div id="calc-score-big" class="calc-score-big" style="color:var(--blue-light);">—</div>
+      <div id="calc-grade-lbl" class="calc-grade-lbl">Adjust sliders above</div>
+      <div id="calc-desc" class="calc-desc"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p><strong>PrincipalYeager.com · School Leaders Think Tank</strong></p>
+  <p>All data sourced directly from the <em>Mississippi Public School Accountability Standards 2025</em>, Revised January 13, 2026.<br/>
+  For official use, always reference the current MDE document at <a href="https://www.mdek12.org" target="_blank" rel="noopener">mdek12.org</a> · Accreditation: <a href="https://www.mdek12.org/OA/Accred" target="_blank" rel="noopener">mdek12.org/OA/Accred</a></p>
+  <p style="margin-top:8px;">© 2026 PrincipalYeager.com · All rights reserved</p>
+  <div><span class="version-badge" id="version-badge">📋 App v2025.1 · MDE 2025–2026</span></div>
+</footer>
+
+<!-- FORMULA MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" onclick="closeFormula()">✕</button>
+    <div class="modal-title" id="m-eyebrow"></div>
+    <div class="modal-name" id="m-name"></div>
+    <div class="modal-rule-tag" id="m-rule"></div>
+    <div class="formula-box" id="m-formula"></div>
+    <div class="modal-example" id="m-example"></div>
+    <div class="modal-rules" id="m-rules"></div>
+    <div class="modal-el-note" id="m-el"></div>
+  </div>
+</div>
+
+<script>
+/* ── Model toggle ── */
+function switchModel(m){
+  document.querySelectorAll('.model-tab').forEach((t,i)=>t.classList.toggle('active',i===(m==='es'?0:1)));
+  document.getElementById('model-es').classList.toggle('active',m==='es');
+  document.getElementById('model-hs').classList.toggle('active',m==='hs');
+}
+
+/* ── Scenario tabs ── */
+function switchScenario(n){
+  document.querySelectorAll('.sc-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+  document.querySelectorAll('.sc-panel').forEach((p,i)=>p.classList.toggle('active',i===n));
+}
+
+/* ── Mobile nav ── */
+function openMobileNav(){document.getElementById('mobile-nav').classList.add('open');document.body.style.overflow='hidden';}
+function closeMobileNav(){document.getElementById('mobile-nav').classList.remove('open');document.body.style.overflow='';}
+
+/* ── FAY Calculator ── */
+function calcFAY(){
+  const year=parseInt(document.getElementById('fay-year').value);
+  const enrollStr=document.getElementById('fay-enroll').value;
+  const testStr=document.getElementById('fay-test').value;
+  if(!enrollStr||!testStr){alert('Please fill in all fields.');return;}
+  const sep1=new Date(year+'-09-01');
+  const enroll=new Date(enrollStr);
+  const test=new Date(testStr);
+  if(test<=sep1){alert('Testing date must be after September 1.');return;}
+  if(enroll>test){alert('Enrollment date cannot be after testing date.');return;}
+  const ms=1000*60*60*24;
+  const windowDays=Math.round((test-sep1)/ms);
+  const threshold=Math.ceil(windowDays*0.75);
+  const enrolledFrom=enroll>sep1?enroll:sep1;
+  const enrolledDays=Math.max(0,Math.round((test-enrolledFrom)/ms));
+  const pctRaw=(enrolledDays/windowDays)*100;
+  const pct=Math.floor(pctRaw*10)/10;
+  const metFAY=pct>=75.0;
+  document.getElementById('fay-window-line').textContent='📅 FAY window: Sept 1, '+year+' → '+test.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' = '+windowDays+' calendar days (weekends + holidays included per §2.3)';
+  document.getElementById('fay-threshold-line').textContent='📏 75% threshold: '+threshold+' days required (74.5% does NOT round up — §2.1)';
+  document.getElementById('fay-enrolled-line').textContent='🏫 Days enrolled: '+enrolledDays+' calendar days (from '+(enroll>sep1?enroll.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'Sept 1 (before window)')+')';
+  document.getElementById('fay-pct-line').textContent='📊 Enrollment percentage: '+pct.toFixed(1)+'% of window (raw: '+pctRaw.toFixed(4)+'%)';
+  const vEl=document.getElementById('fay-verdict');
+  if(metFAY){
+    vEl.textContent='✅ FAY MET — This student\'s test score COUNTS toward school accountability data (Proficiency). Growth also counts if a prior-year MS score exists.';
+    vEl.className='fay-result-verdict fay-met';
+  }else{
+    const shortBy=threshold-enrolledDays;
+    const latestMs=test.getTime()-(threshold*ms);
+    const latest=new Date(latestMs);
+    vEl.textContent='❌ FAY NOT MET — Student is '+shortBy+' day(s) short of the '+threshold+'-day threshold ('+pct.toFixed(1)+'% < 75.0%). To meet FAY, enrollment must have begun by '+latest.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+' or earlier.';
+    vEl.className='fay-result-verdict fay-not';
+  }
+  const res=document.getElementById('fay-result');
+  res.style.display='block';
+  res.classList.add('show');
+}
+
+/* ── Formula Data ── */
+const FD={
+  c1:{eyebrow:'Component 1 — Both Models',name:'Reading Proficiency',rule:'Business Rule §5 · Participation §4.1 · N-Count §3.1.1',num:'FAY Students Scoring Proficient or Above in Reading/ELA',den:'Total FAY Students Who Tested (or 95% of Enrollment if Participation &lt; 95%)',mult:'× 100',result:'Reading Proficiency Points (0–100)',ex:{data:'250 FAY students enrolled. 242 tested (96.8% ✅). Of those, 170 scored Proficient or Above.',calc:'170 ÷ 242 = 0.7025 × 100 = 70.2 points (rounded to one decimal per §19.1)',result:'✅ Reading Proficiency = 70.2 points'},rules:['Only FAY students are counted in both numerator and denominator (§2.1).','§5.1: Proficiency = percentage of students scoring Proficient or above. No additional credit for Advanced; no partial credit below Proficient.','§4.1: If overall participation rate is below 95%, denominator becomes 95% of total enrollment. This reduces the proficiency percentage.','§4.1: Failure to meet 95% participation also triggers an automatic drop of one performance classification (letter grade).','§3.1.1: Minimum of 10 valid test scores required. If not met, up to 3 years of prior data may be combined.','§19.1: Final component value rounded to one decimal place. Total composite rounded to whole number.'],el:'§15.2.2 — EL Adjustment: When an EL performance component is active, each component\'s maximum points are reduced by 5% total.'},
+  c2:{eyebrow:'Component 2 — Both Models',name:'Reading Growth — All Students',rule:'Business Rule §6.1 · §6.2 · §6.8 · §6.15',num:'FAY Students Who Demonstrated Growth in Reading (weighted by §6.2)',den:'All FAY Students With a Valid Prior-Year Reading Score (§6.15)',mult:'× 100',result:'Reading Growth — All Students Points (0–100)',ex:{data:'200 FAY students have a prior-year MS Reading baseline. 140 demonstrated growth. Of those 140: 20 students stayed at Advanced (weight 1.25) and 120 had standard growth (weight 1.0).',calc:'Numerator: (20 × 1.25) + (120 × 1.0) = 25 + 120 = 145. Rate: 145 ÷ 200 = 0.725 × 100 = 72.5 points',result:'✅ Reading Growth (All Students) = 72.5 points'},rules:['§6.1: Growth = increase of ANY proficiency level, staying at Proficient year-to-year, or crossing the midpoint within the lowest 3 levels.','§6.2: Weight of 1.25 applied per student for: staying at Advanced, increasing 2+ levels, or reaching the highest level. Component maximum cannot be exceeded.','§6.3: Any decrease in proficiency level = 0 points for that student.','§6.8: Students without a prior-year Mississippi score are excluded entirely — including out-of-state transfers.','§6.13: Student must meet FAY in the current year to be in growth calculations, but is NOT required to have met FAY in the prior year.','§6.15: Denominator = all FAY students with two valid assessment scores. Numerator = those who demonstrated growth, weighted.'],el:'§15.2.2 — EL Adjustment: All growth component maximums are reduced proportionally when the EL performance component is active.'},
+  c3:{eyebrow:'Component 3 — Both Models',name:'Reading Growth — LP 25% Student Subgroup',rule:'Business Rule §6 · §7 · §7.1 · §3.2',num:'LP 25% Subgroup FAY Students Who Demonstrated Reading Growth (weighted)',den:'All LP 25% Subgroup FAY Students With a Prior-Year Reading Score',mult:'× 100',result:'Reading Growth — LP 25% Subgroup Points (0–100)',ex:{data:'School has 50 students identified in the LP25% Reading subgroup (§7.1 process). 35 have prior-year MS scores. Of those 35: 18 demonstrated growth.',calc:'18 × 1.0 = 18 ÷ 35 = 0.514 × 100 = 51.4 points',result:'✅ Reading Growth LP25% = 51.4 points'},rules:['§7.1.1: LP25% subgroup identified by sorting all FAY students\' prior-year standardized scores from highest to lowest by grade, then identifying the bottom 25%.','§7.1: Process applied separately for Reading and Math. A student may be in Reading LP25% but not Math LP25%, or both.','§3.2.1: LP25% subgroup must meet a minimum N-count of 10. If fewer than 10, the subgroup expands to include all students except those at the highest achievement level.','§3.2.2: At grade level, a minimum of 4 students with valid scale scores required to identify LP25%.','Same §6.1 growth criteria and §6.2 weights apply as in the All Students growth component.'],el:'§15.2.2 — EL Adjustment: LP25% growth component maximum reduces proportionally when EL component is active.'},
+  c4:{eyebrow:'Component 4 — Both Models',name:'Math Proficiency',rule:'Business Rule §5 · Participation §4.1 · N-Count §3.1.1',num:'FAY Students Scoring Proficient or Above in Mathematics',den:'Total FAY Students Who Tested in Math (or 95% of Enrollment if Participation &lt; 95%)',mult:'× 100',result:'Math Proficiency Points (0–100)',ex:{data:'248 FAY students. 241 tested (97.2% ✅). 145 scored Proficient or Above.',calc:'145 ÷ 241 = 0.6016 × 100 = 60.2 points',result:'✅ Math Proficiency = 60.2 points'},rules:['Identical formula structure to Reading Proficiency.','§5.2: Assessments include all federally required statewide assessments in Mathematics plus end-of-course subject area assessments.','§5.2: All Alternate Assessments (AA-AAS) for SCD students are included in proficiency calculations.','§4.1: 95% participation rule and one-grade-drop penalty apply identically to Math.'],el:'§15.2.2 — EL Adjustment: Math Proficiency maximum reduces proportionally when EL component is active.'},
+  c5:{eyebrow:'Component 5 — Both Models',name:'Math Growth — All Students',rule:'Business Rule §6.1 · §6.2 · §6.7 · §6.8',num:'FAY Students Who Demonstrated Growth in Math (weighted by §6.2)',den:'All FAY Students With a Valid Prior-Year Math Score',mult:'× 100',result:'Math Growth — All Students Points (0–100)',ex:{data:'195 FAY students have a prior-year Math baseline. 128 demonstrated growth. Of those: 15 increased 2+ levels (weight 1.25), 113 standard growth (weight 1.0).',calc:'(15 × 1.25) + (113 × 1.0) = 18.75 + 113 = 131.75 ÷ 195 = 0.6756 × 100 = 67.6 points',result:'✅ Math Growth (All Students) = 67.6 points'},rules:['§6.7: For HS Math growth, the 8th grade assessment is used as the baseline for Math-All and Math-LP25%.','§6.6: Students taking Algebra I in 7th or 8th grade have two growth calculations — grade-level to grade-level AND grade-level to Algebra I.','§6.8: Students without a prior-year MS score excluded from all growth components.','Same §6.1 criteria and §6.2 weights as Reading Growth.'],el:'§15.2.2 — EL Adjustment applies proportionally.'},
+  c6:{eyebrow:'Component 6 — Both Models',name:'Math Growth — LP 25% Student Subgroup',rule:'Business Rule §6 · §7 · §7.1',num:'LP 25% Subgroup FAY Students Who Demonstrated Math Growth (weighted)',den:'All LP 25% Subgroup FAY Students With a Prior-Year Math Score',mult:'× 100',result:'Math Growth — LP 25% Subgroup Points (0–100)',ex:{data:'45 students in LP25% Math subgroup. 30 have prior-year scores. 22 demonstrated growth. 5 increased 2+ levels (weight 1.25); 17 standard (weight 1.0).',calc:'(5 × 1.25) + (17 × 1.0) = 6.25 + 17 = 23.25 ÷ 30 = 0.775 × 100 = 77.5 points',result:'✅ Math Growth LP25% = 77.5 points'},rules:['LP25% Math subgroup is identified separately from LP25% Reading subgroup per §7.1.1.','A student can be in both the Reading and Math LP25% subgroups simultaneously.','§7.2: District-level LP25% uses the same method as the school — the district is treated as one school.','Same N-count rules (§3.2) apply to LP25% subgroup growth as to the proficiency components.'],el:'§15.2.2 — EL Adjustment applies proportionally.'},
+  c7es:{eyebrow:'Component 7 — ES/MS Model Only',name:'Science Proficiency (ES/MS — 100 pts)',rule:'Business Rule §5.1 · §5.2 · Participation §4.1',num:'FAY Students Scoring Proficient or Above in Science',den:'Total FAY Students Who Tested in Science (or 95% of Enrollment if Participation &lt; 95%)',mult:'× 100',result:'Science Proficiency Points (0–100) — ES/MS Model',ex:{data:'School tests Grade 5 Science. 155 FAY students. 152 tested (98.1% ✅). 86 scored Proficient or Above.',calc:'86 ÷ 152 = 0.5658 × 100 = 56.6 points',result:'✅ Science Proficiency (ES/MS) = 56.6 points'},rules:['In the ES/MS 700-point model, Science Proficiency is worth the full 100 points.','§5.2: Includes all federally required statewide science assessments.','Participation rate (95%) rule applies.','N-count minimum of 10 applies. For schools without a 5th or 8th grade, an equating process is used (§22.1.2).'],el:'§15.2.2 — EL Adjustment: Science Proficiency maximum reduces proportionally when EL component is active.'},
+  c7hs:{eyebrow:'Component 7 — HS Model Only',name:'Science Proficiency (HS — 50 pts)',rule:'Business Rule §5.1.1 · §5.1.2',num:'FAY Students Scoring Proficient or Above in Science',den:'Total FAY Students Who Tested in Science (or 95% of Enrollment if Participation &lt; 95%)',mult:'× 0.5 (50-point component per §5.1.1)',result:'Science Proficiency Points (0–50) — HS Model',ex:{data:'High school. All science assessments included. 180 FAY tested. 108 scored Proficient or Above.',calc:'108 ÷ 180 = 0.600 × 0.5 × 100 = 30.0 points (or: 0.600 × 50 = 30.0 points)',result:'✅ Science Proficiency (HS) = 30.0 points out of 50 maximum'},rules:['§5.1.1: For proficiency components worth 50 points, the weighted percentage of students proficient is multiplied by 0.5.','§5.1.2: The Science proficiency component for HS schools is based on ALL science assessments administered at the school.','For HS schools that also have a 5th and/or 8th grade, Science is still worth 50 points (not 100).','Same 95% participation rule applies.'],el:'§15.2.2 — EL Adjustment: HS Science 50-pt maximum reduces proportionally when EL component is active.'},
+  c8:{eyebrow:'Component 8 — HS Model Only',name:'Graduation Rate — All Students',rule:'Business Rule §8 · §8.1 · §8.3 · §8.5',num:'Students in the 4-Year Adjusted Cohort Who Graduated with a Regular or State-Defined Alternate Diploma',den:'Total Students in the 4-Year Adjusted Cohort (with adjustments for deaths, emigrations, transfers per §8.1)',mult:'× 100 → then × 2.0 multiplier (§8.3)',result:'Graduation Rate Points (0–200) — HS Model',ex:{data:'4-year adjusted cohort: 200 students. 174 graduated. Graduation rate applied is lagged one year (§8.5).',calc:'174 ÷ 200 = 0.870 × 100 = 87.0 points × 2.0 = 174.0 total points',result:'✅ Graduation Rate Component = 174.0 points out of 200 possible'},rules:['§8.3: The 2.0 multiplier makes Graduation Rate the single highest-impact component in the 1,000-point model.','§8.1: Uses the federally approved 4-year Adjusted Cohort Graduation Rate (ACGR) methodology.','§8.2: Ungraded students assigned to peer-age cohort based on the year the student turns 14 prior to September 1.','§8.4: Students assigned to school and district of longest enrollment during the 4-year cohort window.','§8.5: The graduation rate applied is LAGGED ONE YEAR — the rate used is from the prior school year.'],el:'§15.2.2 — EL Adjustment: Graduation Rate component maximum reduces proportionally when EL component is active. The 2.0 multiplier still applies to the adjusted maximum.'},
+  c9:{eyebrow:'Component 9 — HS Model Only',name:'Readiness Indicator (Acceleration + Assessment + Achievement)',rule:'Business Rule §9 · §25 · §26 · §27 (Senior Snapshot)',num:'Sum of: [Acceleration score (÷ den × 50)] + [Assessment score (÷ den × 50)] + [Achievement score (÷ den × 50)]',den:'Senior Snapshot population (§27) for Assessment &amp; Achievement; Eligible 11th/12th grade students for Acceleration (§9.4.2)',mult:'Each sub-component scored 0–50; total max = 150 points',result:'Readiness Points (0–150) — HS Model',ex:{data:'Senior Snapshot: 185 students. Acceleration: 60 of 200 eligible 11th/12th graders passed accelerated courses = 60÷200×50 = 15 pts. Assessment: students averaged 0.62 score = 0.62×50 = 31.0 pts. Achievement: students averaged 0.70 score = 0.70×50 = 35.0 pts.',calc:'15.0 + 31.0 + 35.0 = 81.0 points',result:'✅ Readiness Indicator = 81.0 points out of 150 maximum'},rules:['§9.3: Each of the three sub-components is scored: numerator ÷ denominator × 50.','§25: Assessment uses ACT Superscore, ACT NCRC, SAT, or ASVAB at end of month 9. Each student receives 0, 0.25, 0.50, 0.75, or 1.0 per the published scoring table.','§26: Achievement is based on diploma type and endorsements — each student scores 0, 0.25, 0.50, 0.75, or 1.0.','§27: Senior Snapshot defines the population — ALL students continuously enrolled from month 1 of 10th grade through month 9 of 12th grade or until a completion status is entered.','§9.8: Students must meet FAY to be included in the Acceleration component.'],el:'§15.2.2 — EL Adjustment: Readiness 150-pt maximum reduces proportionally when EL component is active.'}
+};
+
+function openFormula(key){
+  const d=FD[key];if(!d)return;
+  document.getElementById('m-eyebrow').textContent=d.eyebrow;
+  document.getElementById('m-name').textContent=d.name;
+  document.getElementById('m-rule').textContent=d.rule;
+  document.getElementById('m-formula').innerHTML=`<div style="margin-bottom:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">Formula</div><span class="frac"><span class="frac-num">${d.num}</span><span class="frac-den">${d.den}</span></span><span class="frac-mult">${d.mult}</span><span class="frac-eq">=</span><span class="frac-result">${d.result}</span>`;
+  document.getElementById('m-example').innerHTML=`<div class="modal-example-label">📐 Worked Example</div><p>${d.ex.data}</p><div class="calc-line">🧮 ${d.ex.calc}</div><div class="result-line">${d.ex.result}</div>`;
+  document.getElementById('m-rules').innerHTML=`<div class="modal-rules-label">📌 Key Rules &amp; Caveats</div>${d.rules.map(r=>`<div class="modal-rule-item">• ${r}</div>`).join('')}`;
+  document.getElementById('m-el').textContent=d.el;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeFormula(){document.getElementById('modal-overlay').classList.remove('open');document.body.style.overflow='';}
+function closeModalOutside(e){if(e.target===document.getElementById('modal-overlay'))closeFormula();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeFormula();});
+
+/* ── Score Calculator ── */
+let calcMode='es';
+const ES_COMPONENTS=[{label:'Reading Proficiency',max:100},{label:'Reading Growth – All Students',max:100},{label:'Reading Growth – LP 25% Subgroup',max:100},{label:'Math Proficiency',max:100},{label:'Math Growth – All Students',max:100},{label:'Math Growth – LP 25% Subgroup',max:100},{label:'Science Proficiency',max:100}];
+const HS_COMPONENTS=[{label:'Reading Proficiency',max:100},{label:'Reading Growth – All Students',max:100},{label:'Reading Growth – LP 25% Subgroup',max:100},{label:'Math Proficiency',max:100},{label:'Math Growth – All Students',max:100},{label:'Math Growth – LP 25% Subgroup',max:100},{label:'Science Proficiency (50-pt max)',max:50},{label:'Graduation Rate × 2.0 (200-pt max)',max:200},{label:'Readiness Indicator (150-pt max)',max:150}];
+const ES_GRADES=[{min:457,lbl:'A',col:'#27c96a'},{min:402,lbl:'B',col:'#5b9fe8'},{min:352,lbl:'C',col:'#e8a020'},{min:277,lbl:'D',col:'#e87830'},{min:0,lbl:'F',col:'#e85454'}];
+const HS_GRADES=[{min:769,lbl:'A',col:'#27c96a'},{min:689,lbl:'B',col:'#5b9fe8'},{min:627,lbl:'C',col:'#e8a020'},{min:567,lbl:'D',col:'#e87830'},{min:0,lbl:'F',col:'#e85454'}];
+
+function buildSliders(){
+  const comps=calcMode==='es'?ES_COMPONENTS:HS_COMPONENTS;
+  document.getElementById('calc-sliders').innerHTML=comps.map((c,i)=>{
+    const def=Math.round(c.max*0.72);
+    return `<div class="slider-row"><label>${c.label}</label><input type="range" min="0" max="${c.max}" value="${def}" oninput="updateCalc()" id="sl-${i}"/><span class="slider-val" id="sv-${i}">${def}</span></div>`;
+  }).join('');
+  updateCalc();
+}
+function updateCalc(){
+  const comps=calcMode==='es'?ES_COMPONENTS:HS_COMPONENTS;
+  const grades=calcMode==='es'?ES_GRADES:HS_GRADES;
+  const maxTotal=calcMode==='es'?700:1000;
+  let total=0;
+  comps.forEach((_,i)=>{const sl=document.getElementById('sl-'+i);if(!sl)return;const v=parseInt(sl.value);document.getElementById('sv-'+i).textContent=v;total+=v;});
+  const g=grades.find(g=>total>=g.min)||grades[grades.length-1];
+  document.getElementById('calc-score-big').textContent=total+' / '+maxTotal;
+  document.getElementById('calc-score-big').style.color=g.col;
+  document.getElementById('calc-grade-lbl').textContent='Letter Grade: '+g.lbl;
+  document.getElementById('calc-grade-lbl').style.color=g.col;
+  document.getElementById('calc-desc').textContent='Cut scores from §1.2 (ES/MS) and §1.3 (HS). Note: 95% participation required to avoid automatic one-grade drop (§4.1).';
+}
+function switchCalc(m){
+  calcMode=m;
+  document.getElementById('calc-es-btn').classList.toggle('active',m==='es');
+  document.getElementById('calc-hs-btn').classList.toggle('active',m==='hs');
+  buildSliders();
+}
+buildSliders();
+
+/* ── Version display ── */
+fetch('./version.json').then(r=>r.json()).then(v=>{
+  const b=document.getElementById('version-badge');
+  if(b)b.textContent='📋 App v'+v.appVersion+' · MDE '+v.schoolYear;
+}).catch(()=>{});
+
+/* ── PWA: Service Worker ── */
+let swRegistration=null;
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').then(reg=>{
+    swRegistration=reg;
+    if(reg.waiting){showUpdateBanner();}
+    reg.addEventListener('updatefound',()=>{
+      const nw=reg.installing;
+      nw.addEventListener('statechange',()=>{
+        if(nw.state==='installed'&&navigator.serviceWorker.controller){showUpdateBanner();}
+      });
+    });
+  });
+  navigator.serviceWorker.addEventListener('controllerchange',()=>window.location.reload());
+}
+
+function showUpdateBanner(){document.getElementById('update-banner').classList.add('show');}
+function dismissUpdate(){document.getElementById('update-banner').classList.remove('show');}
+function applyUpdate(){
+  if(swRegistration&&swRegistration.waiting){
+    swRegistration.waiting.postMessage({type:'SKIP_WAITING'});
+  }
+}
+
+/* ── PWA: Install Prompt ── */
+let deferredPrompt=null;
+const INSTALL_DISMISSED_KEY='install-banner-dismissed';
+
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  if(!localStorage.getItem(INSTALL_DISMISSED_KEY)){
+    setTimeout(()=>document.getElementById('install-banner').classList.add('show'),2500);
+  }
+});
+
+function installApp(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(r=>{
+      if(r.outcome==='accepted')dismissInstall();
+      deferredPrompt=null;
+    });
+  }
+}
+function dismissInstall(){
+  document.getElementById('install-banner').classList.remove('show');
+  localStorage.setItem(INSTALL_DISMISSED_KEY,'1');
+}
+
+window.addEventListener('appinstalled',()=>{
+  dismissInstall();
+  deferredPrompt=null;
+});
+</script>
+</body>
+</html>
